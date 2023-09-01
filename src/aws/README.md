@@ -1,13 +1,13 @@
 # AWS CodePipeline
 
-[![fluentci pipeline](https://img.shields.io/badge/dynamic/json?label=pkg.fluentci.io&labelColor=%23000&color=%23460cf1&url=https%3A%2F%2Fapi.fluentci.io%2Fv1%2Fpipeline%2Fsonar_pipeline&query=%24.version)](https://pkg.fluentci.io/sonar_pipeline)
+[![fluentci pipeline](https://img.shields.io/badge/dynamic/json?label=pkg.fluentci.io&labelColor=%23000&color=%23460cf1&url=https%3A%2F%2Fapi.fluentci.io%2Fv1%2Fpipeline%2Fbuf_pipeline&query=%24.version)](https://pkg.fluentci.io/buf_pipeline)
 ![deno compatibility](https://shield.deno.dev/deno/^1.34)
-[![](https://img.shields.io/codecov/c/gh/fluent-ci-templates/sonar-pipeline)](https://codecov.io/gh/fluent-ci-templates/sonar-pipeline)
+[![](https://img.shields.io/codecov/c/gh/fluent-ci-templates/buf-pipeline)](https://codecov.io/gh/fluent-ci-templates/buf-pipeline)
 
 The following command will generate a `buildspec.yml` file in your project:
 
 ```bash
-fluentci ac init -t sonar_pipeline
+fluentci ac init -t buf_pipeline
 ```
 
 Generated file:
@@ -28,7 +28,7 @@ phases:
       - dagger version
   build:
     commands:
-      - fluentci run sonar_pipeline
+      - fluentci run buf_pipeline
   post_build:
     commands:
       - echo Build completed on `date`
