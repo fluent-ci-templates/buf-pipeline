@@ -18,8 +18,8 @@ export const push = async (client: Client, src = ".") => {
     .withDirectory("/app", context)
     .withWorkdir("/app")
     .withEnvVariable("BUF_TOKEN", BUF_TOKEN)
-    .withExec(["buf", "version"])
-    .withExec(["buf", "push"]);
+    .withExec(["--version"])
+    .withExec(["push"]);
 
   const result = await ctr.stdout();
 
@@ -34,8 +34,8 @@ export const lint = async (client: Client, src = ".") => {
     .from("bufbuild/buf")
     .withDirectory("/app", context)
     .withWorkdir("/app")
-    .withExec(["buf", "version"])
-    .withExec(["buf", "lint"]);
+    .withExec(["--version"])
+    .withExec(["lint"]);
 
   const result = await ctr.stdout();
 
