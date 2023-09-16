@@ -1,9 +1,11 @@
-import Client from "@dagger.io/dagger";
+import Client from "@fluentci.io/dagger";
 
 export enum Job {
   lint = "lint",
   push = "push",
 }
+
+export const exclude = [];
 
 export const push = async (client: Client, src = ".") => {
   const context = client.host().directory(src);
