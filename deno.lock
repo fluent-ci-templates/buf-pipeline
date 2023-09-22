@@ -240,5 +240,16 @@
     "https://sdk.fluentci.io/v0.1.9/src/connect.ts": "1bb42b4e0c5073bb2125b90f1d7d08a66fcad9ad8c453924b944be72d3a56c98",
     "https://sdk.fluentci.io/v0.1.9/src/context.ts": "2939ff58d0a79d7377d5553e725c9a2110a0013035a5a57abe9a9a5da975c4ce",
     "https://sdk.fluentci.io/v0.1.9/src/utils.ts": "394d131cfd465f0f3d8f876237f3bad1ab4dba73b9b7a396ee705d02aee40c16"
+  },
+  "npm": {
+    "specifiers": {
+      "@types/node": "@types/node@18.16.19"
+    },
+    "packages": {
+      "@types/node@18.16.19": {
+        "integrity": "sha512-IXl7o+R9iti9eBW4Wg2hx1xQDig183jj7YLn8F7udNceyfkbn1ZxmzZXuak20gR40D7pIkIY1kYGx5VIGbaHKA==",
+        "dependencies": {}
+      }
+    }
   }
 }
