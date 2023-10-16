@@ -21,8 +21,3 @@ jobs:
       - name: Run Dagger Pipelines
         run: dagger run deno run -A ../src/dagger/runner.ts
         working-directory: example
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_ORGANIZATION: tsirysndr
-          SONAR_PROJECT_KEY: sonar-example
-          SONAR_SOURCES: src,copybooks

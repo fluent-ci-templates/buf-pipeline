@@ -1,5 +1,5 @@
 {
   buf {
-    push(src: ".")
+    push(src: ".", token: "BUF_TOKEN")
   }
 }

@@ -19,5 +19,4 @@ jobs:
       - name: Run Dagger Pipelines
         run: |
           dagger query --doc lint.gql
-          dagger query --doc fmt.gql
         working-directory: example
