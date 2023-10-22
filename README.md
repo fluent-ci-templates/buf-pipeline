@@ -45,6 +45,11 @@ fluentci run .
 
 You can also use this pipeline programmatically:
 
+```graphql
+  lint(src: String!): String
+  push(src: String!, token: String!): String
+```
+
 ```ts
 import { lint, push } from "https://pkg.fluentci.io/buf_pipeline@v0.3.0/mod.ts";
 
