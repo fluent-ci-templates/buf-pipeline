@@ -41,20 +41,18 @@ fluentci run .
 | lint   | Lint your Protobuf files with buf.            |
 | push   | Push your Protobuf files to the Buf Registry. |
 
+```graphql
+  lint(src: String!): String
+  push(src: String!, token: String!): String
+```
+
 ## Programmatic usage
 
 You can also use this pipeline programmatically:
 
 ```ts
-import Client, { connect } from "https://sdk.fluentci.io/v0.1.9/mod.ts";
-import { lint, push } from "https://pkg.fluentci.io/buf_pipeline@v0.2.2/mod.ts";
+import { lint, push } from "https://pkg.fluentci.io/buf_pipeline@v0.3.0/mod.ts";
 
-function pipeline(src = ".") {
-  connect(async (client: Client) => {
-    await lint(client, src);
-    await push(client, src);
-  });
-}
-
-pipeline();
+await lint();
+await push();
 ```

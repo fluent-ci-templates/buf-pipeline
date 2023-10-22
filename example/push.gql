@@ -1,0 +1,5 @@
+{
+  buf {
+    push(src: ".", token: "BUF_TOKEN")
+  }
+}
