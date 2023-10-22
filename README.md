@@ -41,14 +41,14 @@ fluentci run .
 | lint   | Lint your Protobuf files with buf.            |
 | push   | Push your Protobuf files to the Buf Registry. |
 
-## Programmatic usage
-
-You can also use this pipeline programmatically:
-
 ```graphql
   lint(src: String!): String
   push(src: String!, token: String!): String
 ```
+
+## Programmatic usage
+
+You can also use this pipeline programmatically:
 
 ```ts
 import { lint, push } from "https://pkg.fluentci.io/buf_pipeline@v0.3.0/mod.ts";
