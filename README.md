@@ -51,7 +51,7 @@ fluentci run .
 You can also use this pipeline programmatically:
 
 ```ts
-import { lint, push } from "https://pkg.fluentci.io/buf_pipeline@v0.3.0/mod.ts";
+import { lint, push } from "https://pkg.fluentci.io/buf_pipeline@v0.3.1/mod.ts";
 
 await lint();
 await push();
