@@ -1,4 +1,4 @@
 import pipeline from "./pipeline.ts";
-import { lint, push } from "./jobs.ts";
+import { lint, format, push } from "./jobs.ts";
 
-export { pipeline, lint, push };
+export { pipeline, lint, format, push };

@@ -14,7 +14,7 @@ message Gauge {
 
 message Metric {
   google.protobuf.Timestamp timestamp = 1;
-  
+
   oneof value {
     Counter counter = 2;
     Gauge gauge = 3;

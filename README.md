@@ -36,14 +36,23 @@ fluentci run .
 
 ## Jobs
 
-| Job    | Description                                |
-| ------ | ------------------------------------------ |
+| Job    | Description                                   |
+| ------ | --------------------------------------------- |
 | lint   | Lint your Protobuf files with buf.            |
+| format | Format your Protobuf files with buf.          |
 | push   | Push your Protobuf files to the Buf Registry. |
 
-```graphql
-  lint(src: String!): String
-  push(src: String!, token: String!): String
+```typescript
+  push(
+    src: Directory | string,
+    token: Secret | string
+  ): Promise<string>
+
+  format(
+    src: Directory | string
+  ): Promise<Directory | string>
+
+  lint(src: Directory | string): Promise<string>
 ```
 
 ## Programmatic usage

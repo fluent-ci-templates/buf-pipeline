@@ -1,7 +1,7 @@
 import { uploadContext } from "../../deps.ts";
 import * as jobs from "./jobs.ts";
 
-const { lint, runnableJobs, exclude } = jobs;
+const { lint, format, runnableJobs, exclude } = jobs;
 
 export default async function pipeline(src = ".", args: string[] = []) {
   if (Deno.env.has("FLUENTCI_SESSION_ID")) {
@@ -12,7 +12,8 @@ export default async function pipeline(src = ".", args: string[] = []) {
     return;
   }
 
-  await lint();
+  await format(src);
+  await lint(src);
 }
 
 async function runSpecificJobs(args: jobs.Job[]) {
@@ -21,6 +22,6 @@ async function runSpecificJobs(args: jobs.Job[]) {
     if (!job) {
       throw new Error(`Job ${name} not found`);
     }
-    await job();
+    await job(".", Deno.env.get("BUF_TOKEN")!);
   }
 }

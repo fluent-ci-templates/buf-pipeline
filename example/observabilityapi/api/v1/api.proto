@@ -30,7 +30,7 @@ message GetMetricsResponse {
 }
 
 service ObservabilityService {
-  rpc GetLogs (GetLogsRequest) returns (GetLogsResponse);
-  rpc PutLogs (PutLogsRequest) returns (google.protobuf.Empty);
-  rpc GetMetrics (GetMetricsRequest) returns (GetMetricsResponse);
+  rpc GetLogs(GetLogsRequest) returns (GetLogsResponse);
+  rpc PutLogs(PutLogsRequest) returns (google.protobuf.Empty);
+  rpc GetMetrics(GetMetricsRequest) returns (GetMetricsResponse);
 }
