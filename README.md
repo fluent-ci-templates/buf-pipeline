@@ -68,7 +68,7 @@ dagger mod install github.com/fluent-ci-templates/buf-pipeline@mod
 You can also use this pipeline programmatically:
 
 ```ts
-import { lint, push } from "https://pkg.fluentci.io/buf_pipeline@v0.4.0/mod.ts";
+import { lint, push } from "https://pkg.fluentci.io/buf_pipeline@v0.5.0/mod.ts";
 
 await lint(".");
 await push(".", Deno.env.get("BUF_TOKEN")!);
