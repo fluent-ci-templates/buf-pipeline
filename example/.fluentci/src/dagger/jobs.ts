@@ -1,5 +1,4 @@
-import Client, { Directory, Secret } from "../../deps.ts";
-import { connect } from "../../sdk/connect.ts";
+import { Directory, Secret, dag } from "../../deps.ts";
 import { getBufToken, getDirectory } from "./lib.ts";
 
 export enum Job {
@@ -21,30 +20,26 @@ export async function push(
   src: Directory | string,
   token: Secret | string
 ): Promise<string> {
-  await connect(async (client: Client) => {
-    const context = getDirectory(client, src);
-    const secret = getBufToken(client, token);
+  const context = await getDirectory(dag, src);
+  const secret = await getBufToken(dag, token);
 
-    if (!secret) {
-      console.error("No BUF_TOKEN secret found");
-      Deno.exit(1);
-    }
+  if (!secret) {
+    console.error("No BUF_TOKEN secret found");
+    Deno.exit(1);
+  }
 
-    const ctr = client
-      .pipeline(Job.push)
-      .container()
-      .from("bufbuild/buf")
-      .withDirectory("/app", context)
-      .withWorkdir("/app")
-      .withSecretVariable("BUF_TOKEN", secret)
-      .withExec(["--version"])
-      .withExec(["push"]);
+  const ctr = dag
+    .pipeline(Job.push)
+    .container()
+    .from("bufbuild/buf")
+    .withDirectory("/app", context)
+    .withWorkdir("/app")
+    .withSecretVariable("BUF_TOKEN", secret)
+    .withExec(["--version"])
+    .withExec(["push"]);
 
-    const result = await ctr.stdout();
-
-    console.log(result);
-  });
-  return "pushed";
+  const result = await ctr.stdout();
+  return result;
 }
 
 /**
@@ -56,21 +51,18 @@ export async function push(
 export async function format(
   src: Directory | string
 ): Promise<Directory | string> {
-  let id = "";
-  await connect(async (client: Client) => {
-    const context = getDirectory(client, src);
-    const ctr = client
-      .pipeline(Job.lint)
-      .container()
-      .from("bufbuild/buf")
-      .withDirectory("/app", context)
-      .withWorkdir("/app")
-      .withExec(["--version"])
-      .withExec(["format", "-w"]);
+  const context = await getDirectory(dag, src);
+  const ctr = dag
+    .pipeline(Job.lint)
+    .container()
+    .from("bufbuild/buf")
+    .withDirectory("/app", context)
+    .withWorkdir("/app")
+    .withExec(["--version"])
+    .withExec(["format", "-w"]);
 
-    await ctr.stdout();
-    id = await ctr.directory("/app").id();
-  });
+  await ctr.stdout();
+  const id = await ctr.directory("/app").id();
   return id;
 }
 
@@ -81,22 +73,18 @@ export async function format(
  * @returns {Promise<string>}
  */
 export async function lint(src: Directory | string): Promise<string> {
-  await connect(async (client: Client) => {
-    const context = getDirectory(client, src);
-    const ctr = client
-      .pipeline(Job.lint)
-      .container()
-      .from("bufbuild/buf")
-      .withDirectory("/app", context)
-      .withWorkdir("/app")
-      .withExec(["--version"])
-      .withExec(["lint"]);
+  const context = await getDirectory(dag, src);
+  const ctr = dag
+    .pipeline(Job.lint)
+    .container()
+    .from("bufbuild/buf")
+    .withDirectory("/app", context)
+    .withWorkdir("/app")
+    .withExec(["--version"])
+    .withExec(["lint"]);
 
-    const result = await ctr.stdout();
-
-    console.log(result);
-  });
-  return "linted";
+  const result = await ctr.stdout();
+  return result;
 }
 
 export type JobExec =
