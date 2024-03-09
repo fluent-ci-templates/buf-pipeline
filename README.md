@@ -1,8 +1,11 @@
 # Buf Pipeline
 
 [![fluentci pipeline](https://img.shields.io/badge/dynamic/json?label=pkg.fluentci.io&labelColor=%23000&color=%23460cf1&url=https%3A%2F%2Fapi.fluentci.io%2Fv1%2Fpipeline%2Fbuf_pipeline&query=%24.version)](https://pkg.fluentci.io/buf_pipeline)
-![deno compatibility](https://shield.deno.dev/deno/^1.37)
+![deno compatibility](https://shield.deno.dev/deno/^1.41)
+[![dagger-min-version](https://img.shields.io/badge/dagger-v0.10.0-blue?color=3D66FF&labelColor=000000)](https://dagger.io)
+[![](https://jsr.io/badges/@fluentci/buf)](https://jsr.io/@fluentci/buf)
 [![](https://img.shields.io/codecov/c/gh/fluent-ci-templates/buf-pipeline)](https://codecov.io/gh/fluent-ci-templates/buf-pipeline)
+[![ci](https://github.com/fluent-ci-templates/buf-pipeline/actions/workflows/ci.yml/badge.svg)](https://github.com/fluent-ci-templates/buf-pipeline/actions/workflows/ci.yml)
 
 A ready-to-use CI/CD Pipeline for linting and pushing Protobuf files to the [Buf](https://buf.build/) Registry.
 
@@ -28,21 +31,29 @@ Now you can run the pipeline with:
 fluentci run .
 ```
 
-## Dagger Module
+## 🧩 Dagger Module
 
 Use as a [Dagger](https://dagger.io) Module:
 
 ```bash
-dagger mod install github.com/fluent-ci-templates/buf-pipeline@mod
+dagger install github.com/fluent-ci-templates/buf-pipeline@main
 ```
 
-## Environment variables
+Call a function from this module:
+
+```bash
+dagger call format --src .
+dagger call lint --src .
+dagger call push --src . --token env:BUF_TOKEN
+```
+
+## 🛠️ Environment variables
 
 | Variable  | Description              |
 | --------- | ------------------------ |
 | BUF_TOKEN | The Buf Registry token. |
 
-## Jobs
+## ✨ Jobs
 
 | Job    | Description                                   |
 | ------ | --------------------------------------------- |
@@ -63,12 +74,12 @@ dagger mod install github.com/fluent-ci-templates/buf-pipeline@mod
   lint(src: Directory | string): Promise<string>
 ```
 
-## Programmatic usage
+## 👨‍💻 Programmatic usage
 
 You can also use this pipeline programmatically:
 
 ```ts
-import { lint, push } from "https://pkg.fluentci.io/buf_pipeline@v0.5.1/mod.ts";
+import { lint, push } from "jsr:@fluentci/buf";
 
 await lint(".");
 await push(".", Deno.env.get("BUF_TOKEN")!);

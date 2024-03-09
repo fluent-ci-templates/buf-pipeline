@@ -1,4 +1,4 @@
-import { Directory, Secret, dag } from "../../deps.ts";
+import { Directory, Secret, dag, exit } from "../../deps.ts";
 import { getBufToken, getDirectory } from "./lib.ts";
 
 export enum Job {
@@ -10,6 +10,8 @@ export enum Job {
 export const exclude = [];
 
 /**
+ * Push your Protobuf files to the Buf Registry
+ *
  * @function
  * @description Push your Protobuf files to the Buf Registry
  * @param {Directory | string} src
@@ -20,12 +22,13 @@ export async function push(
   src: Directory | string,
   token: Secret | string
 ): Promise<string> {
-  const context = await getDirectory(dag, src);
-  const secret = await getBufToken(dag, token);
+  const context = await getDirectory(src);
+  const secret = await getBufToken(token);
 
   if (!secret) {
     console.error("No BUF_TOKEN secret found");
-    Deno.exit(1);
+    exit(1);
+    return "";
   }
 
   const ctr = dag
@@ -38,11 +41,12 @@ export async function push(
     .withExec(["--version"])
     .withExec(["push"]);
 
-  const result = await ctr.stdout();
-  return result;
+  return ctr.stdout();
 }
 
 /**
+ * Format your Protobuf files
+ *
  * @function
  * @description Format your Protobuf files
  * @param {Directory | string} src
@@ -51,7 +55,7 @@ export async function push(
 export async function format(
   src: Directory | string
 ): Promise<Directory | string> {
-  const context = await getDirectory(dag, src);
+  const context = await getDirectory(src);
   const ctr = dag
     .pipeline(Job.lint)
     .container()
@@ -62,18 +66,19 @@ export async function format(
     .withExec(["format", "-w"]);
 
   await ctr.stdout();
-  const id = await ctr.directory("/app").id();
-  return id;
+  return ctr.directory("/app").id();
 }
 
 /**
+ * Lint your Protobuf files
+ *
  * @function
  * @description Lint your Protobuf files
  * @param {Directory | string} src
  * @returns {Promise<string>}
  */
 export async function lint(src: Directory | string): Promise<string> {
-  const context = await getDirectory(dag, src);
+  const context = await getDirectory(src);
   const ctr = dag
     .pipeline(Job.lint)
     .container()
@@ -83,8 +88,7 @@ export async function lint(src: Directory | string): Promise<string> {
     .withExec(["--version"])
     .withExec(["lint"]);
 
-  const result = await ctr.stdout();
-  return result;
+  return ctr.stdout();
 }
 
 export type JobExec =
