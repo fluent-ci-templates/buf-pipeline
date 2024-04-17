@@ -15,7 +15,7 @@ jobs:
           plugin: .
           args: |
             lint
-            format
+            format --write
           working-directory: example
       - name: Run Dagger Pipelines
         run: dagger run deno run -A ../src/dagger/runner.ts
