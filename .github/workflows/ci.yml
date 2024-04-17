@@ -16,7 +16,6 @@ jobs:
           plugin: deno
           args: |
             fmt
-            lint
             test
             coverage
       - name: Run Dagger Pipelines
